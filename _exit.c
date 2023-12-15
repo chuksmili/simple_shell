@@ -4,7 +4,8 @@
   * _handle_exit - ...
   * @u_tokns: ...
   * @line: ...
-  * Return: Nothing to return
+  *
+  * Return: Nothing to returns
   */
 void _handle_exit(char **u_tokns, char *line)
 {
