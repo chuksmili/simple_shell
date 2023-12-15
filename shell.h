@@ -1,111 +1,39 @@
-#include "shell.h"
+#ifndef SHELL
+#define SHELL
 
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
 
+extern char **environ;
 
-/**
-  * _puts - Prints a string
-  * @str: The string to print
-  *
-  * Return: Nothing to returns
-  */
-void _puts(char *str)
-{
-	while (*str)
-	{
-		_putchar(*str);
-		str++;
-	}
+char *_strcat(char *dest, char *src);
+int _strlen(const char *s);
+int _strcmp(char *s1, char *s2);
+int _strncmp(const char *s1, const char *s2, size_t len);
+char *_strdup(char *str);
+int _atoi(char *s);
+int _putchar(char c);
+void _puts(char *str);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+int count_input(char *str);
+int count_delims(char *str, char *del);
+char *remove_new_line(char *str);
+void signal_handler(int sig_id);
+void _open_help(void);
+void _print_env(void);
+void _handle_exit(char **u_tokns, char *line);
+int execBuiltInCommands(char **u_tokns, char *line);
+void frees_get_env(char *env_path);
+void frees_tokens(char **tokns);
+int exec(char *cname, char **opts);
+char *_getenv(const char *name);
+char **tokenize(char *str, char *del, int len);
+char *find(char *cname);
 
-	_putchar('\n');
-}
-
-/**
-  * _strncmp - Compares at most the first n bytes of str1 and str2
-  * @s1: The first string
-  * @s2: The second string
-  * @len: The limit bytes of comparison
-  *
-  * Return: int value
-  */
-int _strncmp(const char *s1, const char *s2, size_t len)
-{
-	unsigned int pos = 0;
-	int diff = 0;
-
-	while (pos < len)
-	{
-		if (s1[pos] == s2[pos])
-		{
-			pos++;
-			continue;
-		}
-		else
-		{
-			diff = s1[pos] - s2[pos];
-			break;
-		}
-
-		pos++;
-	}
-
-	return (diff);
-}
-
-/**
-  * _realloc - Resize the ptr that was previously allocated
-  * @ptr: The pointer previously allocated
-  * @old_size: The old size of the pointer
-  * @new_size: The new size of the new pointer
-  *
-  * Return: A new pointer to the memory block allocated with the new size
-  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
-{
-	char *nptr;
-	unsigned int i;
-
-	if (new_size == old_size)
-		return (ptr);
-
-	if (ptr == NULL)
-	{
-		nptr = malloc(new_size);
-
-		if (nptr == NULL)
-			return (NULL);
-
-		return (nptr);
-	}
-	else
-	{
-		if (new_size == 0)
-		{
-			free(ptr);
-			return (NULL);
-		}
-	}
-
-	nptr = malloc(new_size);
-
-	if (nptr == NULL)
-		return (NULL);
-
-	for (i = 0; i < old_size && i < new_size; i++)
-	{
-		nptr[i] = ((char *) ptr)[i];
-	}
-
-	free(ptr);
-	return (nptr);
-}
+#endif
